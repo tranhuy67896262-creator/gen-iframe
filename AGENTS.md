@@ -15,15 +15,20 @@ No linting configured.
 ## Architecture
 
 - **Angular 21** standalone components (no `NgModule`). Uses `@angular/build:application` (Vite/esbuild).
-- **Entry:** `src/main.ts` → bootstraps `App` with `appConfig`.
-- **Routes:** `src/app/app.routes.ts` — currently empty. Add routed components here.
-- **Components directory:** `src/app/components/` — intended location for new components.
+- **Entry:** `src/main.ts` → boots `App` with `appConfig` (provides router + `HttpClient`).
+- **Tab-based UI** — `App` renders `DisplayPanelComponent` or `UploadPanelComponent` via `@if` control flow + `signal()`. No `RouterOutlet` usage.
+- **Components:** `src/app/components/display-panel/`, `src/app/components/upload-panel/`
+- **Service:** `src/app/services/upload.service.ts` — file upload logic, injected via `inject()`.
+- **Routes:** `src/app/app.routes.ts` — currently empty.
 - **Environment files:** `src/environments/` — swapped via Angular file replacements. Both empty objects.
 - **`src/docs/`** — static HTML, not loaded by Angular.
 
 ## Conventions
 
 - **Standalone components only.** Use `imports` in `@Component`, never `NgModule`.
+- **All component files co-located** — `.ts`, `.html`, `.css` in same folder. Flat naming: `display-panel.ts`, not `display-panel.component.ts`.
+- **Inject pattern** — prefer `inject()` over constructor injection (see `upload-panel.ts`).
+- **Angular signals** for reactive state, `DestroyRef` for cleanup.
 - **Tailwind v4** — CSS-first config via `@import 'tailwindcss'` in `src/styles.css`. No `tailwind.config.js`.
 - **TS strict mode** enabled. `module: "preserve"` defers to bundler.
 - **Tests** use `vitest/globals` (`describe`, `it`, `expect` available without imports). DOM via `jsdom`.
