@@ -15,14 +15,19 @@ export class UploadPanelComponent {
 
   protected mp4File = signal<File | null>(null);
   protected srtFile = signal<File | null>(null);
+  protected audioFile = signal<File | null>(null);
   protected status = signal<UploadStatus>('idle');
   protected errorMessage = signal('');
   protected videoPreviewUrl = signal<string | null>(null);
+  protected audioPreviewUrl = signal<string | null>(null);
 
   private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
-    this.destroyRef.onDestroy(() => this.revokePreview());
+    this.destroyRef.onDestroy(() => {
+      this.revokePreview();
+      this.revokeAudioPreview();
+    });
   }
 
   onMp4Selected(event: Event): void {
@@ -36,6 +41,13 @@ export class UploadPanelComponent {
     const input = event.target as HTMLInputElement;
     if (input.files?.[0]) {
       this.srtFile.set(input.files[0]);
+    }
+  }
+
+  onAudioSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.[0]) {
+      this.setAudioFile(input.files[0]);
     }
   }
 
@@ -55,6 +67,14 @@ export class UploadPanelComponent {
     }
   }
 
+  onAudioDrop(event: DragEvent): void {
+    event.preventDefault();
+    const file = event.dataTransfer?.files[0];
+    if (file && (file.type === 'audio/wav' || file.type === 'audio/mpeg')) {
+      this.setAudioFile(file);
+    }
+  }
+
   preventDefault(event: DragEvent): void {
     event.preventDefault();
   }
@@ -68,6 +88,11 @@ export class UploadPanelComponent {
     this.srtFile.set(null);
   }
 
+  removeAudio(): void {
+    this.revokeAudioPreview();
+    this.audioFile.set(null);
+  }
+
   upload(): void {
     const mp4 = this.mp4File();
     const srt = this.srtFile();
@@ -76,7 +101,7 @@ export class UploadPanelComponent {
     this.status.set('uploading');
     this.errorMessage.set('');
 
-    this.uploadService.uploadFiles(mp4, srt).subscribe({
+    this.uploadService.uploadFiles(mp4, srt, this.audioFile() ?? undefined).subscribe({
       next: () => this.status.set('success'),
       error: (err) => {
         this.status.set('error');
@@ -87,8 +112,10 @@ export class UploadPanelComponent {
 
   reset(): void {
     this.revokePreview();
+    this.revokeAudioPreview();
     this.mp4File.set(null);
     this.srtFile.set(null);
+    this.audioFile.set(null);
     this.status.set('idle');
     this.errorMessage.set('');
   }
@@ -104,6 +131,20 @@ export class UploadPanelComponent {
     if (url) {
       URL.revokeObjectURL(url);
       this.videoPreviewUrl.set(null);
+    }
+  }
+
+  private setAudioFile(file: File): void {
+    this.revokeAudioPreview();
+    this.audioFile.set(file);
+    this.audioPreviewUrl.set(URL.createObjectURL(file));
+  }
+
+  private revokeAudioPreview(): void {
+    const url = this.audioPreviewUrl();
+    if (url) {
+      URL.revokeObjectURL(url);
+      this.audioPreviewUrl.set(null);
     }
   }
 }

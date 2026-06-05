@@ -35,3 +35,11 @@
 .video-player {
   @apply w-full max-h-[360px];
 }
+
+.audio-preview {
+  @apply rounded-xl border border-gray-200 bg-gray-50 p-4;
+}
+
+.audio-player {
+  @apply w-full;
+}

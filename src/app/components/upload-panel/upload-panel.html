@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto p-6 space-y-6">
-  <h2 class="text-xl font-semibold text-gray-800">Upload Video &amp; Subtitle</h2>
+  <h2 class="text-xl font-semibold text-gray-800">Upload Video, Subtitle &amp; Audio</h2>
 
   <!-- MP4 drop zone -->
   <div
@@ -77,6 +77,48 @@
       </label>
     }
   </div>
+
+  <!-- Audio drop zone -->
+  <div
+    class="drop-zone"
+    (dragover)="preventDefault($event)"
+    (drop)="onAudioDrop($event)"
+  >
+    @if (audioFile(); as file) {
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center gap-3">
+          <svg class="w-8 h-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+          </svg>
+          <div>
+            <p class="text-sm font-medium text-gray-700">{{ file.name }}</p>
+            <p class="text-xs text-gray-400">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+          </div>
+        </div>
+        <button (click)="removeAudio()" class="text-gray-400 hover:text-red-500 transition-colors" title="Remove">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    } @else {
+      <label class="drop-label cursor-pointer">
+        <svg class="mx-auto mb-2 w-10 h-10 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+        </svg>
+        <p class="text-sm text-gray-500"><span class="font-semibold text-indigo-600">Click to upload</span> or drag &amp; drop</p>
+        <p class="text-xs text-gray-400 mt-1">Audio file (WAV, MP3)</p>
+        <input type="file" accept=".wav,audio/wav,.mp3,audio/mpeg" (change)="onAudioSelected($event)" class="hidden" />
+      </label>
+    }
+  </div>
+
+  <!-- Audio preview -->
+  @if (audioPreviewUrl(); as url) {
+    <div class="audio-preview">
+      <audio controls [src]="url" class="audio-player"></audio>
+    </div>
+  }
 
   <!-- Actions -->
   <div class="flex gap-3">
