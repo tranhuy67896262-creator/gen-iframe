@@ -20,6 +20,8 @@ export class UploadPanelComponent {
   protected errorMessage = signal('');
   protected videoPreviewUrl = signal<string | null>(null);
   protected audioPreviewUrl = signal<string | null>(null);
+  protected videoScale = signal<number | 'origin'>(50);
+  protected readonly scaleOptions: (number | 'origin')[] = [25, 50, 75, 100, 'origin'];
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -77,6 +79,10 @@ export class UploadPanelComponent {
 
   preventDefault(event: DragEvent): void {
     event.preventDefault();
+  }
+
+  setScale(value: number | 'origin'): void {
+    this.videoScale.set(value);
   }
 
   removeMp4(): void {

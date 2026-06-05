@@ -1,160 +1,224 @@
-<div class="max-w-2xl mx-auto p-6 space-y-6">
-  <h2 class="text-xl font-semibold text-gray-800">Upload Video, Subtitle &amp; Audio</h2>
+<div class="upload-container">
+  <!-- LEFT: Upload panel -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <h2 class="panel-title">Upload Files</h2>
+      <p class="panel-desc">Select or drag files to upload</p>
+    </div>
 
-  <!-- MP4 drop zone -->
-  <div
-    class="drop-zone"
-    (dragover)="preventDefault($event)"
-    (drop)="onMp4Drop($event)"
-  >
-    @if (mp4File(); as file) {
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <!-- Video card -->
+    <div
+      class="file-card"
+      (dragover)="preventDefault($event)"
+      (drop)="onMp4Drop($event)"
+    >
+      <div class="card-header">
+        <span class="card-badge badge-video">Video</span>
+        @if (mp4File()) {
+          <button (click)="removeMp4()" class="remove-btn" title="Remove">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        }
+      </div>
+      @if (mp4File(); as file) {
+        <div class="card-body card-body-horizontal">
+          <svg class="card-icon-sm text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
           </svg>
-          <div>
-            <p class="text-sm font-medium text-gray-700">{{ file.name }}</p>
-            <p class="text-xs text-gray-400">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+          <div class="card-info">
+            <p class="file-name" [title]="file.name">{{ file.name }}</p>
+            <p class="file-size">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
           </div>
         </div>
-        <button (click)="removeMp4()" class="text-gray-400 hover:text-red-500 transition-colors" title="Remove">
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      } @else {
+        <label class="card-empty cursor-pointer">
+          <svg class="w-7 h-7 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
           </svg>
-        </button>
-      </div>
-    } @else {
-      <label class="drop-label cursor-pointer">
-        <svg class="mx-auto mb-2 w-10 h-10 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-        </svg>
-        <p class="text-sm text-gray-500"><span class="font-semibold text-indigo-600">Click to upload</span> or drag &amp; drop</p>
-        <p class="text-xs text-gray-400 mt-1">MP4 video file</p>
-        <input type="file" accept=".mp4,video/mp4" (change)="onMp4Selected($event)" class="hidden" />
-      </label>
-    }
-  </div>
-
-  <!-- Video preview -->
-  @if (videoPreviewUrl(); as url) {
-    <div class="video-preview">
-      <video controls [src]="url" class="video-player"></video>
+          <p class="text-xs text-gray-400 mt-1.5">Drop or click</p>
+          <p class="text-[10px] text-gray-300">MP4</p>
+          <input type="file" accept=".mp4,video/mp4" (change)="onMp4Selected($event)" class="hidden" />
+        </label>
+      }
     </div>
-  }
 
-  <!-- SRT drop zone -->
-  <div
-    class="drop-zone"
-    (dragover)="preventDefault($event)"
-    (drop)="onSrtDrop($event)"
-  >
-    @if (srtFile(); as file) {
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <!-- Subtitle card -->
+    <div
+      class="file-card"
+      (dragover)="preventDefault($event)"
+      (drop)="onSrtDrop($event)"
+    >
+      <div class="card-header">
+        <span class="card-badge badge-sub">Subtitle</span>
+        @if (srtFile()) {
+          <button (click)="removeSrt()" class="remove-btn" title="Remove">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        }
+      </div>
+      @if (srtFile(); as file) {
+        <div class="card-body card-body-horizontal">
+          <svg class="card-icon-sm text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
           </svg>
-          <div>
-            <p class="text-sm font-medium text-gray-700">{{ file.name }}</p>
-            <p class="text-xs text-gray-400">{{ (file.size / 1024).toFixed(2) }} KB</p>
+          <div class="card-info">
+            <p class="file-name" [title]="file.name">{{ file.name }}</p>
+            <p class="file-size">{{ (file.size / 1024).toFixed(2) }} KB</p>
           </div>
         </div>
-        <button (click)="removeSrt()" class="text-gray-400 hover:text-red-500 transition-colors" title="Remove">
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      } @else {
+        <label class="card-empty cursor-pointer">
+          <svg class="w-7 h-7 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
           </svg>
-        </button>
-      </div>
-    } @else {
-      <label class="drop-label cursor-pointer">
-        <svg class="mx-auto mb-2 w-10 h-10 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-        </svg>
-        <p class="text-sm text-gray-500"><span class="font-semibold text-indigo-600">Click to upload</span> or drag &amp; drop</p>
-        <p class="text-xs text-gray-400 mt-1">SRT subtitle file</p>
-        <input type="file" accept=".srt" (change)="onSrtSelected($event)" class="hidden" />
-      </label>
-    }
-  </div>
+          <p class="text-xs text-gray-400 mt-1.5">Drop or click</p>
+          <p class="text-[10px] text-gray-300">SRT</p>
+          <input type="file" accept=".srt" (change)="onSrtSelected($event)" class="hidden" />
+        </label>
+      }
+    </div>
 
-  <!-- Audio drop zone -->
-  <div
-    class="drop-zone"
-    (dragover)="preventDefault($event)"
-    (drop)="onAudioDrop($event)"
-  >
-    @if (audioFile(); as file) {
-      <div class="flex items-center justify-between w-full">
-        <div class="flex items-center gap-3">
-          <svg class="w-8 h-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <!-- Audio card -->
+    <div
+      class="file-card"
+      (dragover)="preventDefault($event)"
+      (drop)="onAudioDrop($event)"
+    >
+      <div class="card-header">
+        <span class="card-badge badge-audio">Audio</span>
+        @if (audioFile()) {
+          <button (click)="removeAudio()" class="remove-btn" title="Remove">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        }
+      </div>
+      @if (audioFile(); as file) {
+        <div class="card-body card-body-horizontal">
+          <svg class="card-icon-sm text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
           </svg>
-          <div>
-            <p class="text-sm font-medium text-gray-700">{{ file.name }}</p>
-            <p class="text-xs text-gray-400">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+          <div class="card-info">
+            <p class="file-name" [title]="file.name">{{ file.name }}</p>
+            <p class="file-size">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
           </div>
         </div>
-        <button (click)="removeAudio()" class="text-gray-400 hover:text-red-500 transition-colors" title="Remove">
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      } @else {
+        <label class="card-empty cursor-pointer">
+          <svg class="w-7 h-7 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
           </svg>
-        </button>
-      </div>
-    } @else {
-      <label class="drop-label cursor-pointer">
-        <svg class="mx-auto mb-2 w-10 h-10 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+          <p class="text-xs text-gray-400 mt-1.5">Drop or click</p>
+          <p class="text-[10px] text-gray-300">WAV / MP3</p>
+          <input type="file" accept=".wav,audio/wav,.mp3,audio/mpeg" (change)="onAudioSelected($event)" class="hidden" />
+        </label>
+      }
+    </div>
+
+    <!-- Actions -->
+    <div class="panel-actions">
+      <button
+        (click)="upload()"
+        [disabled]="!mp4File() || !srtFile() || status() === 'uploading'"
+        class="upload-btn"
+      >
+        @if (status() === 'uploading') {
+          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          Uploading...
+        } @else {
+          <svg class="w-4 h-4 mr-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+          </svg>
+          Upload All
+        }
+      </button>
+      <button (click)="reset()" class="reset-btn">
+        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" />
         </svg>
-        <p class="text-sm text-gray-500"><span class="font-semibold text-indigo-600">Click to upload</span> or drag &amp; drop</p>
-        <p class="text-xs text-gray-400 mt-1">Audio file (WAV, MP3)</p>
-        <input type="file" accept=".wav,audio/wav,.mp3,audio/mpeg" (change)="onAudioSelected($event)" class="hidden" />
-      </label>
+        Reset
+      </button>
+    </div>
+
+    <!-- Status -->
+    @if (status() === 'success') {
+      <div class="status-success">
+        <svg class="w-4 h-4 text-green-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span>Upload successful!</span>
+      </div>
+    }
+    @if (status() === 'error') {
+      <div class="status-error">
+        <svg class="w-4 h-4 text-red-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+        </svg>
+        <span>{{ errorMessage() }}</span>
+      </div>
     }
   </div>
 
-  <!-- Audio preview -->
-  @if (audioPreviewUrl(); as url) {
-    <div class="audio-preview">
-      <audio controls [src]="url" class="audio-player"></audio>
+  <!-- RIGHT: Preview panel -->
+  <div class="right-panel">
+    <div class="panel-header">
+      <h2 class="panel-title">Preview</h2>
     </div>
-  }
 
-  <!-- Actions -->
-  <div class="flex gap-3">
-    <button
-      (click)="upload()"
-      [disabled]="!mp4File() || !srtFile() || status() === 'uploading'"
-      class="upload-btn"
-    >
-      @if (status() === 'uploading') {
-        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
-        Uploading...
-      } @else {
-        Upload
+    @if (videoPreviewUrl() || audioPreviewUrl()) {
+      @if (videoPreviewUrl(); as url) {
+        <div class="preview-block">
+          <div class="preview-label-row">
+            <span class="preview-label">
+              <svg class="w-3.5 h-3.5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+              </svg>
+              Video
+            </span>
+            <div class="scale-controls">
+              @for (opt of scaleOptions; track opt) {
+                <button
+                  class="scale-btn"
+                  [class.active]="videoScale() === opt"
+                  (click)="setScale(opt)"
+                >{{ opt === 'origin' ? 'Origin' : opt + '%' }}</button>
+              }
+            </div>
+          </div>
+          <div class="video-preview">
+            <video controls [src]="url" class="video-player" [style.maxHeight]="videoScale() === 'origin' ? 'none' : videoScale() + 'vh'"></video>
+          </div>
+        </div>
       }
-    </button>
-    <button (click)="reset()" class="reset-btn">Reset</button>
+      @if (audioPreviewUrl(); as url) {
+        <div class="preview-block">
+          <span class="preview-label">
+            <svg class="w-3.5 h-3.5 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+            </svg>
+            Audio
+          </span>
+          <div class="audio-preview">
+            <audio controls [src]="url" class="audio-player"></audio>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="preview-empty">
+        <svg class="w-12 h-12 text-gray-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
+        </svg>
+        <p class="text-sm text-gray-300 mt-3">Upload files to preview</p>
+      </div>
+    }
   </div>
-
-  <!-- Status messages -->
-  @if (status() === 'success') {
-    <div class="status-success">
-      <svg class="w-5 h-5 text-green-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-      </svg>
-      <span>Upload successful!</span>
-    </div>
-  }
-  @if (status() === 'error') {
-    <div class="status-error">
-      <svg class="w-5 h-5 text-red-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-      </svg>
-      <span>{{ errorMessage() }}</span>
-    </div>
-  }
 </div>
