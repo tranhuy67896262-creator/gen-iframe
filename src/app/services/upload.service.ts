@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UploadService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://api.example.com/upload';
+  private readonly apiUrl = 'http://localhost:3000/api/upload';
 
   uploadFiles(mp4: File, srt: File, audio?: File): Observable<any> {
     const formData = new FormData();
