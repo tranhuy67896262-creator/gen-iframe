@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Ngày Content Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #222222;
+    --accent: #e8c547;
+    --accent2: #ff6b35;
+    --text: #f0f0f0;
+    --text-muted: #888;
+    --text-dim: #555;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 60px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .header h1 span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .header-desc {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* FORMAT BOX */
+  .format-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin-bottom: 60px;
+    border-radius: 2px;
+  }
+
+  .format-box h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .format-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .format-step {
+    text-align: center;
+  }
+
+  .step-time {
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-family: monospace;
+  }
+
+  .step-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .step-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 18px;
+    padding-top: 10px;
+  }
+
+  /* PHASE SECTION */
+  .phases-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  .phase-block {
+    margin-bottom: 48px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .phase-header {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .phase-header:hover { background: var(--surface2); }
+
+  .phase-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .phase-title-wrap {}
+
+  .phase-q {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .phase-keys {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .phase-toggle {
+    color: var(--text-dim);
+    font-size: 18px;
+    transition: transform 0.3s;
+    user-select: none;
+  }
+
+  .phase-toggle.open { transform: rotate(180deg); }
+
+  /* TABLE */
+  .phase-table {
+    display: none;
+    width: 100%;
+  }
+
+  .phase-table.open { display: table; }
+
+  .phase-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .phase-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .phase-table tr:last-child td { border-bottom: none; }
+
+  .phase-table tr:nth-child(even) td { background: rgba(255,255,255,0.01); }
+
+  .day-num {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    width: 36px;
+  }
+
+  .key-tag {
+    display: inline-block;
+    background: rgba(232,197,71,0.1);
+    border: 1px solid rgba(232,197,71,0.2);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .hook-text {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .insight-text {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; color: #111; }
+    .phase-table { display: table !important; }
+    .phase-toggle { display: none; }
+    .phase-header { cursor: default; }
+    .phase-table table th { background: #f5f5f5; }
+  }
+
+  /* PRINT BUTTON */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: opacity 0.2s;
+  }
+
+  .btn:hover { opacity: 0.8; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 32px 20px; }
+    .header h1 { font-size: 32px; }
+    .format-steps { grid-template-columns: 1fr 1fr; }
+    .phase-table th:nth-child(4),
+    .phase-table td:nth-child(4) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-label">Content Framework · Video Ngắn</div>
+    <h1>100 Ngày<br><span>Tại Sao Bạn...</span></h1>
+    <p class="header-desc">10 phase × 10 ngày. Mỗi video chỉ 1 ý duy nhất. Hook trong 3 giây đầu. Kết thúc bằng câu hỏi mở để giữ comment.</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="window.print()">⬇ In / Lưu PDF</button>
+    <button class="btn btn-secondary" onclick="toggleAll()">↕ Mở / Đóng tất cả</button>
+  </div>
+
+  <div class="format-box">
+    <h3>Cấu trúc mỗi video (30–60s)</h3>
+    <div class="format-steps">
+      <div class="format-step">
+        <div class="step-time">0–3s</div>
+        <div class="step-label">Hook = câu hỏi chạm thẳng vào người xem</div>
+      </div>
+      <div class="format-step">
+        <div class="step-time">3–20s</div>
+        <div class="step-label">1 insight ngắn hoặc 1 câu chuyện cực nhỏ</div>
+      </div>
+      <div class="format-step">
+        <div class="step-time">20–50s</div>
+        <div class="step-label">Lý giải đơn giản — chỉ 1 ý, không nhiều hơn</div>
+      </div>
+      <div class="format-step">
+        <div class="step-time">50–60s</div>
+        <div class="step-label">Kết mở = câu hỏi lại cho người xem</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phases-title">10 Phase · 100 Video</div>
+
+  <!-- PHASE 1 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">1</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn không thể ngừng lo lắng?</div>
+        <div class="phase-keys">sợ · tương lai · kiểm soát · so sánh · mạng xã hội · đồng trang lứa · tiền bạc · danh hiệu · ngủ · cô đơn</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">1</td><td><span class="key-tag">sợ</span></td><td class="hook-text">"Tại sao bạn sợ những thứ chưa xảy ra?"</td><td class="insight-text">Não bạn không phân biệt được tưởng tượng với thực tế — nó chuẩn bị cho cả hai.</td></tr>
+        <tr><td class="day-num">2</td><td><span class="key-tag">tương lai</span></td><td class="hook-text">"Tại sao bạn cảm thấy mơ hồ về tương lai?"</td><td class="insight-text">Không phải bạn thiếu kế hoạch — bạn đang trôi vì chưa có 1 quyết định duy nhất.</td></tr>
+        <tr><td class="day-num">3</td><td><span class="key-tag">kiểm soát</span></td><td class="hook-text">"Tại sao bạn cố kiểm soát mọi thứ?"</td><td class="insight-text">Khi mọi thứ không như ý, não bạn tìm thứ để nắm. Thứ duy nhất nó tìm được là bạn.</td></tr>
+        <tr><td class="day-num">4</td><td><span class="key-tag">so sánh</span></td><td class="hook-text">"Tại sao bạn so sánh mình với người bằng tuổi?"</td><td class="insight-text">Bạn đang so sánh cuộc sống thật của mình với phiên bản chỉnh sửa của họ.</td></tr>
+        <tr><td class="day-num">5</td><td><span class="key-tag">mạng xã hội</span></td><td class="hook-text">"Tại sao bạn vẫn lướt dù biết nó làm mình tệ hơn?"</td><td class="insight-text">Bạn từng tắt app rồi cài lại chưa? Đó không phải thiếu ý chí — đó là cơ chế dopamine.</td></tr>
+        <tr><td class="day-num">6</td><td><span class="key-tag">đồng trang lứa</span></td><td class="hook-text">"Tại sao bạn cảm thấy tội lỗi khi chậm hơn bạn bè?"</td><td class="insight-text">Họ có biết bạn đang cố gắng không? Hay chỉ bạn đang tự tạo áp lực?</td></tr>
+        <tr><td class="day-num">7</td><td><span class="key-tag">tiền bạc</span></td><td class="hook-text">"Tại sao bạn sợ không đủ tiền?"</td><td class="insight-text">Không đủ cho nhu cầu thật — hay không đủ cho kỳ vọng bạn nghĩ người khác đặt vào bạn?</td></tr>
+        <tr><td class="day-num">8</td><td><span class="key-tag">danh hiệu</span></td><td class="hook-text">"Tại sao bạn muốn được công nhận?"</td><td class="insight-text">Nếu không ai biết bạn giỏi, bạn có còn thấy mình giỏi không?</td></tr>
+        <tr><td class="day-num">9</td><td><span class="key-tag">ngủ</span></td><td class="hook-text">"Tại sao bạn thức khuya dù biết sẽ mệt?"</td><td class="insight-text">12h đêm là khoảnh khắc duy nhất không ai cần gì từ bạn — não bạn không muốn buông.</td></tr>
+        <tr><td class="day-num">10</td><td><span class="key-tag">cô đơn</span></td><td class="hook-text">"Tại sao bạn sợ ở một mình đến vậy?"</td><td class="insight-text">Ở một mình khác với cô đơn. Bạn đang sợ điều gì khi không có tiếng ồn?</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">2</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn không thể bắt đầu?</div>
+        <div class="phase-keys">trì hoãn · cầu toàn · sợ sai · thiếu tự tin · lười · mơ hồ · thiếu kỷ luật · thiếu năng lượng · sợ bị chê · chờ thời điểm</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">11</td><td><span class="key-tag">trì hoãn</span></td><td class="hook-text">"Tại sao bạn làm mọi thứ trừ việc quan trọng nhất?"</td><td class="insight-text">Trì hoãn không phải lười — đó là cách não tránh cảm giác không thoải mái.</td></tr>
+        <tr><td class="day-num">12</td><td><span class="key-tag">cầu toàn</span></td><td class="hook-text">"Tại sao bạn không gửi đi khi chưa hoàn hảo?"</td><td class="insight-text">Cầu toàn trông như tiêu chuẩn cao — nhưng thường là sợ bị phán xét che giấu.</td></tr>
+        <tr><td class="day-num">13</td><td><span class="key-tag">sợ sai</span></td><td class="hook-text">"Tại sao bạn thà không làm còn hơn làm sai?"</td><td class="insight-text">Sai và thử là dữ liệu. Không làm gì mới là thất bại thật sự.</td></tr>
+        <tr><td class="day-num">14</td><td><span class="key-tag">thiếu tự tin</span></td><td class="hook-text">"Tại sao bạn không tin mình đủ giỏi để bắt đầu?"</td><td class="insight-text">Tự tin không đến trước hành động — nó đến sau. Bạn đang chờ ngược chiều.</td></tr>
+        <tr><td class="day-num">15</td><td><span class="key-tag">lười</span></td><td class="hook-text">"Tại sao bạn gọi mình là lười?"</td><td class="insight-text">Lười thường là dấu hiệu của mục tiêu không đủ rõ hoặc cơ thể đang kiệt sức.</td></tr>
+        <tr><td class="day-num">16</td><td><span class="key-tag">mơ hồ</span></td><td class="hook-text">"Tại sao bạn biết mình muốn gì mà vẫn không làm?"</td><td class="insight-text">Muốn một thứ mơ hồ không đủ để bắt đầu — não cần bước tiếp theo cụ thể.</td></tr>
+        <tr><td class="day-num">17</td><td><span class="key-tag">thiếu kỷ luật</span></td><td class="hook-text">"Tại sao kỷ luật của bạn chỉ kéo dài 3 ngày?"</td><td class="insight-text">Không phải ý chí yếu — môi trường bạn chưa thiết kế để thành công.</td></tr>
+        <tr><td class="day-num">18</td><td><span class="key-tag">thiếu năng lượng</span></td><td class="hook-text">"Tại sao bạn luôn mệt dù không làm gì?"</td><td class="insight-text">Năng lượng tinh thần cạn trước năng lượng thể chất — bạn đã tốn nó cho việc lo lắng rồi.</td></tr>
+        <tr><td class="day-num">19</td><td><span class="key-tag">sợ bị chê</span></td><td class="hook-text">"Tại sao ý kiến người lạ lại ngăn bạn bắt đầu?"</td><td class="insight-text">Người chê bạn không suy nghĩ về bạn nhiều như bạn nghĩ — họ đang sống cuộc đời họ.</td></tr>
+        <tr><td class="day-num">20</td><td><span class="key-tag">chờ thời điểm</span></td><td class="hook-text">"Tại sao bạn vẫn chờ thời điểm đúng?"</td><td class="insight-text">Thời điểm đúng sẽ không đến. Nó được tạo ra bởi người bắt đầu dù chưa sẵn sàng.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">3</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn sợ người khác nghĩ gì?</div>
+        <div class="phase-keys">ánh mắt · giả tạo · nổi bật · kỳ quặc · bị cười · bị cô lập · bị phán xét · bị đánh giá · bị bỏ rơi · không được công nhận</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">21</td><td><span class="key-tag">ánh mắt</span></td><td class="hook-text">"Tại sao bạn để ý ánh mắt người lạ khi đi một mình?"</td><td class="insight-text">Não bạn đang quét môi trường tìm nguy hiểm xã hội — bản năng từ thời bộ lạc.</td></tr>
+        <tr><td class="day-num">22</td><td><span class="key-tag">giả tạo</span></td><td class="hook-text">"Tại sao bạn nói khác với những gì bạn thật sự nghĩ?"</td><td class="insight-text">Không phải bạn giả — bạn đang bảo vệ phần dễ tổn thương nhất của mình.</td></tr>
+        <tr><td class="day-num">23</td><td><span class="key-tag">nổi bật</span></td><td class="hook-text">"Tại sao bạn sợ nổi bật dù bạn muốn được thấy?"</td><td class="insight-text">Muốn được nhìn thấy nhưng sợ bị nhìn — đó là mâu thuẫn rất người.</td></tr>
+        <tr><td class="day-num">24</td><td><span class="key-tag">kỳ quặc</span></td><td class="hook-text">"Tại sao bạn giấu phần 'kỳ lạ' của mình?"</td><td class="insight-text">Phần bạn thấy kỳ quặc nhất thường là phần người khác thấy thú vị nhất.</td></tr>
+        <tr><td class="day-num">25</td><td><span class="key-tag">bị cười</span></td><td class="hook-text">"Tại sao bạn sợ bị cười hơn sợ không thử?"</td><td class="insight-text">Người cười bạn thử và thất bại — họ đang nhìn từ khán đài mà chưa dám xuống sân.</td></tr>
+        <tr><td class="day-num">26</td><td><span class="key-tag">bị cô lập</span></td><td class="hook-text">"Tại sao bạn sợ bị nhóm bỏ ra ngoài?"</td><td class="insight-text">Não bạn xử lý bị loại trừ xã hội như đau thật — vì với tổ tiên, bị đuổi khỏi bầy là chết.</td></tr>
+        <tr><td class="day-num">27</td><td><span class="key-tag">bị phán xét</span></td><td class="hook-text">"Tại sao bạn cảm thấy ai cũng đang đánh giá bạn?"</td><td class="insight-text">Spotlight effect — bạn nghĩ mọi người để ý bạn nhiều hơn thực tế rất nhiều.</td></tr>
+        <tr><td class="day-num">28</td><td><span class="key-tag">bị đánh giá</span></td><td class="hook-text">"Tại sao bạn giải thích lý do cho mọi lựa chọn của mình?"</td><td class="insight-text">Khi bạn không cần bào chữa — đó là lúc bạn thật sự tự do.</td></tr>
+        <tr><td class="day-num">29</td><td><span class="key-tag">bị bỏ rơi</span></td><td class="hook-text">"Tại sao bạn luôn đợi người khác nhắn tin trước?"</td><td class="insight-text">Sợ chủ động vì sợ biết mình không quan trọng — nhưng im lặng cũng là câu trả lời.</td></tr>
+        <tr><td class="day-num">30</td><td><span class="key-tag">không được công nhận</span></td><td class="hook-text">"Tại sao bạn cần người khác xác nhận bạn đã làm tốt?"</td><td class="insight-text">Nếu không ai nói "giỏi lắm" — bạn có tự biết mình đã cố gắng chưa?</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">4</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn ghen tị với người khác?</div>
+        <div class="phase-keys">thành công · tiền bạc · ngoại hình · tình yêu · tự do · mạng xã hội · bạn thân · đồng nghiệp · người yêu cũ · người lạ</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">31</td><td><span class="key-tag">thành công</span></td><td class="hook-text">"Tại sao bạn không vui được khi người khác thành công?"</td><td class="insight-text">Ghen tị là la bàn — nó chỉ chính xác thứ bạn thật sự muốn cho mình.</td></tr>
+        <tr><td class="day-num">32</td><td><span class="key-tag">tiền bạc</span></td><td class="hook-text">"Tại sao bạn để ý thu nhập của người khác?"</td><td class="insight-text">Bạn không ghen với tiền họ — bạn ghen với sự tự do mà bạn nghĩ tiền đó mang lại.</td></tr>
+        <tr><td class="day-num">33</td><td><span class="key-tag">ngoại hình</span></td><td class="hook-text">"Tại sao bạn so sánh cơ thể mình với người trên mạng?"</td><td class="insight-text">Bạn đang so với ảnh đã qua bộ lọc, góc chụp và ánh sáng chỉnh sửa cẩn thận.</td></tr>
+        <tr><td class="day-num">34</td><td><span class="key-tag">tình yêu</span></td><td class="hook-text">"Tại sao bạn ghen khi thấy người khác có tình yêu đẹp?"</td><td class="insight-text">Bạn không ghen với họ — bạn nhớ phần mình chưa dám đòi hỏi cho bản thân.</td></tr>
+        <tr><td class="day-num">35</td><td><span class="key-tag">tự do</span></td><td class="hook-text">"Tại sao bạn ghen với người trông có vẻ tự do?"</td><td class="insight-text">Tự do của họ trông dễ vì bạn không thấy thứ họ đã từ bỏ để có nó.</td></tr>
+        <tr><td class="day-num">36</td><td><span class="key-tag">mạng xã hội</span></td><td class="hook-text">"Tại sao feed của bạn làm bạn cảm thấy thua kém?"</td><td class="insight-text">Bạn đang so cuộc sống nguyên vẹn của mình với highlight reel của người khác.</td></tr>
+        <tr><td class="day-num">37</td><td><span class="key-tag">bạn thân</span></td><td class="hook-text">"Tại sao ghen tị với bạn thân lại khó thừa nhận hơn?"</td><td class="insight-text">Vì bạn yêu họ thật sự — và cảm giác đó tạo ra xung đột bên trong.</td></tr>
+        <tr><td class="day-num">38</td><td><span class="key-tag">đồng nghiệp</span></td><td class="hook-text">"Tại sao bạn khó chúc mừng đồng nghiệp được thăng chức?"</td><td class="insight-text">Không phải bạn ích kỷ — bạn đang đau vì thứ mình cũng muốn mà chưa có.</td></tr>
+        <tr><td class="day-num">39</td><td><span class="key-tag">người yêu cũ</span></td><td class="hook-text">"Tại sao bạn stalk người yêu cũ trên mạng?"</td><td class="insight-text">Bạn không tìm họ — bạn đang kiểm tra xem mình có đang 'thua' không.</td></tr>
+        <tr><td class="day-num">40</td><td><span class="key-tag">người lạ</span></td><td class="hook-text">"Tại sao bạn ghen với người bạn thậm chí chưa biết tên?"</td><td class="insight-text">Ghen với người lạ — đó là bạn đang phản chiếu ước mơ chưa dám nói thành lời.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">5</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn nói dối?</div>
+        <div class="phase-keys">bố mẹ · bản thân · bạn bè · người yêu · đồng nghiệp · trên mạng · về thành tích · về cảm xúc · về quá khứ · về tương lai</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">41</td><td><span class="key-tag">bố mẹ</span></td><td class="hook-text">"Tại sao bạn nói dối bố mẹ dù đã lớn?"</td><td class="insight-text">Không phải vì bạn sợ — mà vì bạn chưa tin họ có thể chấp nhận con người thật của bạn.</td></tr>
+        <tr><td class="day-num">42</td><td><span class="key-tag">bản thân</span></td><td class="hook-text">"Tại sao bạn tự nói dối mình nhiều nhất?"</td><td class="insight-text">"Tôi ổn." "Tôi không quan tâm." "Thêm một lần nữa thôi." — bạn biết đó là dối trá.</td></tr>
+        <tr><td class="day-num">43</td><td><span class="key-tag">bạn bè</span></td><td class="hook-text">"Tại sao bạn nói 'bận' thay vì nói 'tôi không muốn đi'?"</td><td class="insight-text">Vì "không muốn" trông ích kỷ — nhưng nó trung thực hơn bất kỳ lý do nào khác.</td></tr>
+        <tr><td class="day-num">44</td><td><span class="key-tag">người yêu</span></td><td class="hook-text">"Tại sao bạn nói 'không sao' khi thật ra không ổn?"</td><td class="insight-text">Vì bạn sợ nhu cầu của mình là gánh nặng — nhưng giữ lại mới là thứ phá mối quan hệ.</td></tr>
+        <tr><td class="day-num">45</td><td><span class="key-tag">đồng nghiệp</span></td><td class="hook-text">"Tại sao bạn nói 'sắp xong rồi' khi chưa bắt đầu?"</td><td class="insight-text">Áp lực kỳ vọng làm bạn hứa trước khi nghĩ — và sau đó phải chạy theo lời hứa đó.</td></tr>
+        <tr><td class="day-num">46</td><td><span class="key-tag">trên mạng</span></td><td class="hook-text">"Tại sao bạn đăng cuộc sống tốt hơn thực tế?"</td><td class="insight-text">Không phải khoe — bạn đang tạo phiên bản mình muốn trở thành, và hy vọng nó thật.</td></tr>
+        <tr><td class="day-num">47</td><td><span class="key-tag">về thành tích</span></td><td class="hook-text">"Tại sao bạn phóng đại thành tích của mình?"</td><td class="insight-text">Vì thành tích thật của bạn trông nhỏ bé khi bạn so với kỳ vọng bạn đặt ra cho chính mình.</td></tr>
+        <tr><td class="day-num">48</td><td><span class="key-tag">về cảm xúc</span></td><td class="hook-text">"Tại sao bạn giấu cảm xúc thật của mình?"</td><td class="insight-text">Ai đó đã từng nói cảm xúc của bạn là quá nhiều — và bạn học cách thu nhỏ mình từ đó.</td></tr>
+        <tr><td class="day-num">49</td><td><span class="key-tag">về quá khứ</span></td><td class="hook-text">"Tại sao bạn kể quá khứ khác đi với người mới?"</td><td class="insight-text">Bạn không nói dối — bạn đang chọn phiên bản quá khứ nào phù hợp với người bạn muốn trở thành.</td></tr>
+        <tr><td class="day-num">50</td><td><span class="key-tag">về tương lai</span></td><td class="hook-text">"Tại sao bạn nói 'sẽ làm' dù biết mình không làm?"</td><td class="insight-text">"Sẽ" đôi khi là cách lịch sự để nói "không" — nhưng nó để lại nợ cảm xúc.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 6 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">6</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn không thể dừng lại?</div>
+        <div class="phase-keys">lướt điện thoại · suy nghĩ tiêu cực · so sánh · làm hài lòng người khác · làm việc quá sức · ăn uống vô độ · tiêu tiền · nhắn tin · xem phim · hồi tưởng</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">51</td><td><span class="key-tag">lướt điện thoại</span></td><td class="hook-text">"Tại sao bạn cầm điện thoại lên mà không biết mình tìm gì?"</td><td class="insight-text">App được thiết kế để bạn không bao giờ cảm thấy đủ — đó là mô hình kinh doanh của họ.</td></tr>
+        <tr><td class="day-num">52</td><td><span class="key-tag">suy nghĩ tiêu cực</span></td><td class="hook-text">"Tại sao não bạn cứ quay lại những thứ tệ nhất?"</td><td class="insight-text">Não thiên kiến tiêu cực — 1 kỷ niệm xấu nặng bằng 5 kỷ niệm tốt. Đó là thiết kế sinh tồn.</td></tr>
+        <tr><td class="day-num">53</td><td><span class="key-tag">so sánh</span></td><td class="hook-text">"Tại sao bạn biết so sánh là vô ích mà vẫn làm?"</td><td class="insight-text">Biết và làm khác nhau — thói quen chạy ở phần não khác với phần bạn dùng để lý luận.</td></tr>
+        <tr><td class="day-num">54</td><td><span class="key-tag">làm hài lòng người khác</span></td><td class="hook-text">"Tại sao bạn liên tục làm hài lòng người khác đến kiệt sức?"</td><td class="insight-text">Lúc nhỏ, được yêu gắn với việc ngoan ngoãn — và não bạn vẫn đang chạy bản đó.</td></tr>
+        <tr><td class="day-num">55</td><td><span class="key-tag">làm việc quá sức</span></td><td class="hook-text">"Tại sao bạn không thể nghỉ dù đã mệt?"</td><td class="insight-text">Nghỉ ngơi bị gắn với tội lỗi — ai đó đã dạy bạn giá trị của bạn = năng suất của bạn.</td></tr>
+        <tr><td class="day-num">56</td><td><span class="key-tag">ăn uống vô độ</span></td><td class="hook-text">"Tại sao bạn ăn khi không đói?"</td><td class="insight-text">Thức ăn là thứ nhanh nhất để làm dịu cảm xúc — não bạn đã học cách dùng nó như vậy.</td></tr>
+        <tr><td class="day-num">57</td><td><span class="key-tag">tiêu tiền</span></td><td class="hook-text">"Tại sao bạn mua thứ không cần rồi lại tiếc?"</td><td class="insight-text">Mua hàng cho cảm giác kiểm soát và phần thưởng tức thì — không phải cho món đồ đó.</td></tr>
+        <tr><td class="day-num">58</td><td><span class="key-tag">nhắn tin</span></td><td class="hook-text">"Tại sao bạn kiểm tra tin nhắn liên tục dù không có gì?"</td><td class="insight-text">Bạn không chờ tin — bạn đang kiểm tra mình có được nhớ đến không.</td></tr>
+        <tr><td class="day-num">59</td><td><span class="key-tag">xem phim</span></td><td class="hook-text">"Tại sao bạn xem tiếp dù đã định dừng từ 2 tiếng trước?"</td><td class="insight-text">Màn hình là lối thoát hợp pháp khỏi cảm giác bạn không muốn ngồi yên với nó.</td></tr>
+        <tr><td class="day-num">60</td><td><span class="key-tag">hồi tưởng</span></td><td class="hook-text">"Tại sao bạn cứ nghĩ lại những chuyện cũ không thể thay đổi?"</td><td class="insight-text">Não hồi tưởng để tìm cách "sửa" — nhưng quá khứ không có nút edit, chỉ có bài học.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 7 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">7</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn không thể nói "không"?</div>
+        <div class="phase-keys">sợ mất lòng · sợ bị ghét · sợ cô đơn · sợ bất công · sợ mất cơ hội · sợ bị coi thường · không biết giới hạn · muốn được yêu · sợ gây chiến · thói quen</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">61</td><td><span class="key-tag">sợ mất lòng</span></td><td class="hook-text">"Tại sao bạn đồng ý dù trong lòng đang nói không?"</td><td class="insight-text">Nói có để giữ người khác vui — nhưng bạn đang trả giá bằng sự bực bội âm ỉ.</td></tr>
+        <tr><td class="day-num">62</td><td><span class="key-tag">sợ bị ghét</span></td><td class="hook-text">"Tại sao bạn cần được mọi người thích?"</td><td class="insight-text">Muốn được thích là bình thường. Sợ bị ghét đến mức không dám là mình — đó là vấn đề khác.</td></tr>
+        <tr><td class="day-num">63</td><td><span class="key-tag">sợ cô đơn</span></td><td class="hook-text">"Tại sao bạn ở lại mối quan hệ không còn tốt?"</td><td class="insight-text">Cô đơn trong mối quan hệ tệ hơn cô đơn một mình — nhưng não bạn không tin điều đó.</td></tr>
+        <tr><td class="day-num">64</td><td><span class="key-tag">sợ bất công</span></td><td class="hook-text">"Tại sao bạn không đòi lại thứ mình xứng đáng được?"</td><td class="insight-text">Đòi hỏi bị nhầm với ích kỷ — nhưng ranh giới lành mạnh không phải tấn công.</td></tr>
+        <tr><td class="day-num">65</td><td><span class="key-tag">sợ mất cơ hội</span></td><td class="hook-text">"Tại sao bạn nhận tất cả dù không có sức làm hết?"</td><td class="insight-text">FOMO cơ hội — nhưng làm nhiều thứ kém hơn làm 1 thứ tốt không phải cơ hội.</td></tr>
+        <tr><td class="day-num">66</td><td><span class="key-tag">sợ bị coi thường</span></td><td class="hook-text">"Tại sao bạn sợ bị xem là khó tính khi từ chối?"</td><td class="insight-text">Người tôn trọng bạn sẽ chấp nhận "không". Người không tôn trọng sẽ dùng sự đồng ý của bạn.</td></tr>
+        <tr><td class="day-num">67</td><td><span class="key-tag">không biết giới hạn</span></td><td class="hook-text">"Tại sao bạn không biết giới hạn của mình ở đâu?"</td><td class="insight-text">Không ai dạy bạn điều này — ranh giới cá nhân không có trong chương trình học.</td></tr>
+        <tr><td class="day-num">68</td><td><span class="key-tag">muốn được yêu</span></td><td class="hook-text">"Tại sao bạn làm mọi thứ để người khác yêu quý mình?"</td><td class="insight-text">Được yêu vì bạn làm — khác với được yêu vì bạn là ai. Bạn đang tìm điều nào?</td></tr>
+        <tr><td class="day-num">69</td><td><span class="key-tag">sợ gây chiến</span></td><td class="hook-text">"Tại sao bạn nuốt giận thay vì nói thẳng?"</td><td class="insight-text">Tránh xung đột ngắn hạn — nhưng tích lũy đủ lâu sẽ nổ theo cách không ai kiểm soát được.</td></tr>
+        <tr><td class="day-num">70</td><td><span class="key-tag">thói quen</span></td><td class="hook-text">"Tại sao 'có' là từ đầu tiên bạn nói trước khi nghĩ?"</td><td class="insight-text">Thói quen đồng ý chạy tự động — bạn cần dừng lại 5 giây để não kịp theo.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 8 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">8</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn sợ thất bại?</div>
+        <div class="phase-keys">bị chê · mất mặt · mất tiền · phí thời gian · chứng minh mình kém · bỏ cuộc · so sánh · gia đình thất vọng · bản thân thất vọng · không dám thử lại</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">71</td><td><span class="key-tag">bị chê</span></td><td class="hook-text">"Tại sao bạn không thử vì sợ người khác nói gì?"</td><td class="insight-text">Người chê bạn thất bại sẽ không ở đó chia sẻ thành công với bạn — tại sao để họ có quyền với bạn?</td></tr>
+        <tr><td class="day-num">72</td><td><span class="key-tag">mất mặt</span></td><td class="hook-text">"Tại sao thất bại trước mặt người khác lại tệ hơn thất bại một mình?"</td><td class="insight-text">Thất bại là sự kiện. Mất mặt là câu chuyện bạn tự kể về sự kiện đó.</td></tr>
+        <tr><td class="day-num">73</td><td><span class="key-tag">mất tiền</span></td><td class="hook-text">"Tại sao bạn không đầu tư vào bản thân vì sợ lãng phí tiền?"</td><td class="insight-text">Không đầu tư cũng là mất — bạn mất cơ hội, mất thời gian, mất phiên bản tốt hơn của mình.</td></tr>
+        <tr><td class="day-num">74</td><td><span class="key-tag">phí thời gian</span></td><td class="hook-text">"Tại sao bạn sợ thử rồi thấy mình đã mất thời gian?"</td><td class="insight-text">Không có kinh nghiệm nào là lãng phí nếu bạn rút ra được điều gì từ nó.</td></tr>
+        <tr><td class="day-num">75</td><td><span class="key-tag">chứng minh mình kém</span></td><td class="hook-text">"Tại sao bạn không thử vì sợ xác nhận mình thật sự không đủ giỏi?"</td><td class="insight-text">Không thử giữ nguyên hy vọng — nhưng cũng giữ nguyên khoảng cách với người bạn muốn trở thành.</td></tr>
+        <tr><td class="day-num">76</td><td><span class="key-tag">bỏ cuộc</span></td><td class="hook-text">"Tại sao bạn bỏ cuộc trước khi thật sự thất bại?"</td><td class="insight-text">Tự bỏ cuộc cho cảm giác kiểm soát — bạn chọn kết thúc thay vì bị kết thúc.</td></tr>
+        <tr><td class="day-num">77</td><td><span class="key-tag">so sánh</span></td><td class="hook-text">"Tại sao bạn so thất bại của mình với thành công của người khác?"</td><td class="insight-text">Bạn thấy điểm đến của họ — không thấy số lần họ thất bại trước đó.</td></tr>
+        <tr><td class="day-num">78</td><td><span class="key-tag">gia đình thất vọng</span></td><td class="hook-text">"Tại sao bạn sống theo kỳ vọng người khác đặt ra?"</td><td class="insight-text">Thất vọng của họ là cảm xúc của họ — không phải trách nhiệm của bạn phải giải quyết.</td></tr>
+        <tr><td class="day-num">79</td><td><span class="key-tag">bản thân thất vọng</span></td><td class="hook-text">"Tại sao bạn khắt khe với bản thân hơn với bất kỳ ai?"</td><td class="insight-text">Bạn sẽ nói gì với bạn thân nếu họ thất bại? Nói điều đó với mình đi.</td></tr>
+        <tr><td class="day-num">80</td><td><span class="key-tag">không dám thử lại</span></td><td class="hook-text">"Tại sao lần thất bại trước vẫn ngăn bạn hôm nay?"</td><td class="insight-text">Bạn của lần trước và bạn hôm nay không phải cùng một người — bạn đã biết thêm nhiều rồi.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 9 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">9</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn nhớ người đã cũ?</div>
+        <div class="phase-keys">hối tiếc · chưa khép lại · sợ cô đơn · so sánh với người mới · lãng mạn hóa quá khứ · tổn thương chưa lành · sợ không ai yêu · thói quen · sợ bắt đầu lại · tin rằng "giá như"</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">81</td><td><span class="key-tag">hối tiếc</span></td><td class="hook-text">"Tại sao bạn vẫn nghĩ 'giá như' về mối quan hệ cũ?"</td><td class="insight-text">Hối tiếc chỉ có ích nếu bạn rút được bài học — còn lại chỉ là đau mà không có đích đến.</td></tr>
+        <tr><td class="day-num">82</td><td><span class="key-tag">chưa khép lại</span></td><td class="hook-text">"Tại sao bạn cần một lời giải thích mà họ không bao giờ cho?"</td><td class="insight-text">Closure không đến từ họ — nó đến từ lúc bạn quyết định không chờ nữa.</td></tr>
+        <tr><td class="day-num">83</td><td><span class="key-tag">sợ cô đơn</span></td><td class="hook-text">"Tại sao bạn nhớ người đó hay nhớ cảm giác có người?"</td><td class="insight-text">Đôi khi bạn không nhớ người — bạn nhớ phiên bản của mình khi ở bên họ.</td></tr>
+        <tr><td class="day-num">84</td><td><span class="key-tag">so sánh với người mới</span></td><td class="hook-text">"Tại sao người mới cứ thua người cũ trong đầu bạn?"</td><td class="insight-text">Bạn đang so người mới thật với ký ức đã qua bộ lọc thời gian của người cũ.</td></tr>
+        <tr><td class="day-num">85</td><td><span class="key-tag">lãng mạn hóa quá khứ</span></td><td class="hook-text">"Tại sao mối quan hệ cũ trông đẹp hơn khi nhìn lại?"</td><td class="insight-text">Não xóa đau theo thời gian — bạn đang nhớ highlight, không nhớ lý do bạn rời đi.</td></tr>
+        <tr><td class="day-num">86</td><td><span class="key-tag">tổn thương chưa lành</span></td><td class="hook-text">"Tại sao bạn vẫn còn giận người đó dù đã lâu?"</td><td class="insight-text">Còn giận là còn kết nối — tha thứ không phải cho họ, là để bạn không bị giữ lại nữa.</td></tr>
+        <tr><td class="day-num">87</td><td><span class="key-tag">sợ không ai yêu</span></td><td class="hook-text">"Tại sao bạn sợ mình không thể yêu hoặc được yêu nữa?"</td><td class="insight-text">Một người không chọn bạn không có nghĩa là bạn không đáng được chọn.</td></tr>
+        <tr><td class="day-num">88</td><td><span class="key-tag">thói quen</span></td><td class="hook-text">"Tại sao bạn nhớ người cũ vào những khung giờ nhất định?"</td><td class="insight-text">Não bạn đã lập trình "lúc này = có họ" — đó là thói quen thần kinh, không phải tình yêu vĩnh cửu.</td></tr>
+        <tr><td class="day-num">89</td><td><span class="key-tag">sợ bắt đầu lại</span></td><td class="hook-text">"Tại sao việc bắt đầu từ đầu với người mới lại mệt đến vậy?"</td><td class="insight-text">Bạn không sợ người mới — bạn sợ phải dễ bị tổn thương một lần nữa.</td></tr>
+        <tr><td class="day-num">90</td><td><span class="key-tag">tin rằng "giá như"</span></td><td class="hook-text">"Tại sao bạn vẫn tin nếu làm khác thì kết quả sẽ khác?"</td><td class="insight-text">"Giá như" là câu hỏi không có đáp án — và não bạn sẽ chạy nó mãi nếu bạn cho phép.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHASE 10 -->
+  <div class="phase-block">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-num">10</div>
+      <div class="phase-title-wrap">
+        <div class="phase-q">Tại sao bạn vẫn chưa tha thứ cho chính mình?</div>
+        <div class="phase-keys">lỗi cũ · cơ hội đã bỏ lỡ · lời nói làm tổn thương người khác · quyết định sai · không dũng cảm · đã từng là kẻ xấu · đã từng yếu đuối · đã từng ích kỷ · đã từng bỏ cuộc · đã từng tổn thương người mình yêu</div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-table">
+      <table>
+        <tr><th>#</th><th>Key</th><th>Hook (0–3s)</th><th>Insight nhanh</th></tr>
+        <tr><td class="day-num">91</td><td><span class="key-tag">lỗi cũ</span></td><td class="hook-text">"Tại sao bạn vẫn nhớ lỗi lầm từ nhiều năm trước?"</td><td class="insight-text">Bạn của ngày đó đã làm hết khả năng với thứ họ biết lúc đó — bạn hôm nay biết nhiều hơn rồi.</td></tr>
+        <tr><td class="day-num">92</td><td><span class="key-tag">cơ hội đã bỏ lỡ</span></td><td class="hook-text">"Tại sao bạn vẫn tiếc cơ hội không thể lấy lại?"</td><td class="insight-text">Mỗi cơ hội bạn bỏ lỡ đã dạy bạn nhận ra cơ hội tiếp theo — nó không mất đi hoàn toàn.</td></tr>
+        <tr><td class="day-num">93</td><td><span class="key-tag">lời nói làm tổn thương người khác</span></td><td class="hook-text">"Tại sao bạn vẫn nghĩ về câu nói mình không nên nói?"</td><td class="insight-text">Còn day dứt là bằng chứng bạn đã trở thành người khác — người đó ngày nay sẽ không nói vậy.</td></tr>
+        <tr><td class="day-num">94</td><td><span class="key-tag">quyết định sai</span></td><td class="hook-text">"Tại sao bạn phán xét quyết định cũ bằng thông tin bạn có hôm nay?"</td><td class="insight-text">Quyết định sai dựa trên thông tin bạn có lúc đó không phải là sai — đó là hết sức rồi.</td></tr>
+        <tr><td class="day-num">95</td><td><span class="key-tag">không dũng cảm</span></td><td class="hook-text">"Tại sao bạn tự trách mình vì đã sợ?"</td><td class="insight-text">Dũng cảm không phải không sợ — là làm dù sợ. Bạn đã đến đây được rồi, đó cũng là dũng cảm.</td></tr>
+        <tr><td class="day-num">96</td><td><span class="key-tag">đã từng là kẻ xấu</span></td><td class="hook-text">"Tại sao bạn vẫn định nghĩa mình bằng phiên bản tệ nhất của mình?"</td><td class="insight-text">Bạn không phải thứ xấu nhất bạn đã làm — bạn là tổng hợp của tất cả những lựa chọn từ đó đến nay.</td></tr>
+        <tr><td class="day-num">97</td><td><span class="key-tag">đã từng yếu đuối</span></td><td class="hook-text">"Tại sao bạn xấu hổ về giai đoạn mình không ổn?"</td><td class="insight-text">Yếu đuối không phải thất bại — đó là nơi bạn đã phải đi qua để trở thành người ngồi đây hôm nay.</td></tr>
+        <tr><td class="day-num">98</td><td><span class="key-tag">đã từng ích kỷ</span></td><td class="hook-text">"Tại sao bạn không thể tha thứ cho lúc mình chọn bản thân?"</td><td class="insight-text">Đôi khi chọn bản thân là thứ duy nhất đúng — ngay cả khi nó làm người khác thất vọng.</td></tr>
+        <tr><td class="day-num">99</td><td><span class="key-tag">đã từng bỏ cuộc</span></td><td class="hook-text">"Tại sao bạn không thể tha thứ cho lần mình bỏ cuộc?"</td><td class="insight-text">Bỏ cuộc đúng lúc không phải thua — là biết mình cần thứ gì khác để tiếp tục sống.</td></tr>
+        <tr><td class="day-num">100</td><td><span class="key-tag">đã từng tổn thương người mình yêu</span></td><td class="hook-text">"Tại sao ngày 100 là ngày bạn nói 'đủ rồi' với bản thân?"</td><td class="insight-text">Bạn đã mang theo tất cả điều đó suốt 100 ngày. Có thể đây là lúc đặt xuống — không phải quên, mà không mang nữa.</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(header) {
+  const table = header.nextElementSibling;
+  const arrow = header.querySelector('.phase-toggle');
+  const isOpen = table.classList.contains('open');
+  table.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+
+function toggleAll() {
+  const tables = document.querySelectorAll('.phase-table');
+  const arrows = document.querySelectorAll('.phase-toggle');
+  const anyOpen = [...tables].some(t => t.classList.contains('open'));
+  tables.forEach(t => t.classList.toggle('open', !anyOpen));
+  arrows.forEach(a => a.classList.toggle('open', !anyOpen));
+}
+</script>
+</body>
+</html>
